@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CP Assistant - আপনার ব্যক্তিগত প্রোগ্রামিং কোচ</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            color: #666;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .card h3 {
+            font-size: 1.4em;
+            margin-bottom: 20px;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .icon {
+            font-size: 1.5em;
+        }
+
+        .contest-item {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .contest-item h4 {
+            color: #333;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+        }
+
+        .contest-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .difficulty-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        .beginner { background: #4CAF50; color: white; }
+        .intermediate { background: #FF9800; color: white; }
+        .advanced { background: #F44336; color: white; }
+
+        .progress-bar {
+            background: #e0e0e0;
+            border-radius: 10px;
+            height: 20px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        .rating-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .rating-item:last-child {
+            border-bottom: none;
+        }
+
+        .platform-logo {
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .rating-value {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .study-plan {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        }
+
+        .week-item {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+        }
+
+        .week-item h4 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .daily-task {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            margin: 8px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .challenge-card {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .challenge-card h4 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .problem-link {
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+            transition: background 0.3s ease;
+        }
+
+        .problem-link:hover {
+            background: #5a6fd8;
+        }
+
+        .quiz-question {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .quiz-options {
+            display: grid;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .quiz-option {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            background: #e0e0e0;
+        }
+
+        .quiz-option.selected {
+            background: #667eea;
+            color: white;
+        }
+
+        .motivation-quote {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .motivation-quote::before {
+            content: '"';
+            font-size: 4em;
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            opacity: 0.3;
+        }
+
+        .motivation-quote::after {
+            content: '"';
+            font-size: 4em;
+            position: absolute;
+            bottom: -30px;
+            right: 20px;
+            opacity: 0.3;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: transform 0.3s ease;
+            margin: 5px;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4CAF50;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            display: none;
+        }
+
+        .chart-container {
+            height: 200px;
+            background: #f9f9f9;
+            border-radius: 10px;
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+        }
+
+        .tech-stack {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .tech-item {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .tab-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .tab-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: #f5f5f5;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .tab-buttons {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏆 CP Assistant</h1>
+            <p>আপনার ব্যক্তিগত প্রতিযোগিতামূলক প্রোগ্রামিং কোচ</p>
+        </div>
+
+        <div class="tab-container">
+            <div class="tab-buttons">
+                <button class="tab-btn active" onclick="switchTab('dashboard')">📊 ড্যাশবোর্ড</button>
+                <button class="tab-btn" onclick="switchTab('contests')">🏁 প্রতিযোগিতা</button>
+                <button class="tab-btn" onclick="switchTab('progress')">📈 অগ্রগতি</button>
+                <button class="tab-btn" onclick="switchTab('study')">📚 অধ্যয়ন পরিকল্পনা</button>
+                <button class="tab-btn" onclick="switchTab('challenges')">💪 চ্যালেঞ্জ</button>
+                <button class="tab-btn" onclick="switchTab('recommendations')">🎯 সুপারিশ</button>
+                <button class="tab-btn" onclick="switchTab('tech')">⚙️ টেক স্ট্যাক</button>
+            </div>
+
+            <div id="dashboard" class="tab-content active">
+                <div class="motivation-quote">
+                    <h3 id="dailyQuote">আজকের অনুপ্রেরণা</h3>
+                    <p id="quoteText">"সফলতা হল একটি যাত্রা, গন্তব্য নয়। প্রতিদিন একটু এগিয়ে চলুন!"</p>
+                </div>
+
+                <div class="dashboard">
+                    <div class="card">
+                        <h3><span class="icon">⏰</span> আজকের কাজ</h3>
+                        <div id="todayTasks">
+                            <div class="daily-task">
+                                ✅ Dynamic Programming - Knapsack Problem অধ্যয়ন করুন
+                            </div>
+                            <div class="daily-task">
+                                📝 Codeforces থেকে 3টি DP সমস্যা সমাধান করুন
+                            </div>
+                            <div class="daily-task">
+                                🧠 গতকালের Graph Theory কুইজ সম্পূর্ণ করুন
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3><span class="icon">🏆</span> আপনার রেটিং</h3>
+                        <div id="ratingsOverview">
+                            <div class="rating-item">
+                                <span class="platform-logo">Codeforces</span>
+                                <span class="rating-value">1247</span>
+                            </div>
+                            <div class="rating-item">
+                                <span class="platform-logo">LeetCode</span>
+                                <span class="rating-value">1856</span>
+                            </div>
+                            <div class="rating-item">
+                                <span class="platform-logo">AtCoder</span>
+                                <span class="rating-value">892</span>
+                            </div>
+                            <div class="rating-item">
+                                <span class="platform-logo">CodeChef</span>
+                                <span class="rating-value">1634</span>
+                            </div>
+                        </div>
+                        <button class="btn" onclick="updateRatings()">রেটিং আপডেট করুন</button>
+                    </div>
+
+                    <div class="card">
+                        <h3><span class="icon">📅</span> আসন্ন প্রতিযোগিতা</h3>
+                        <div id="upcomingContests">
+                            <div class="contest-item">
+                                <h4>Codeforces Round #912 (Div. 2)</h4>
+                                <div class="contest-meta">
+                                    <span>আজ, 8:35 PM</span>
+                                    <span class="difficulty-badge intermediate">মধ্যম</span>
+                                </div>
+                            </div>
+                            <div class="contest-item">
+                                <h4>LeetCode Weekly Contest 372</h4>
+                                <div class="contest-meta">
+                                    <span>আগামীকাল, 10:30 AM</span>
+                                    <span class="difficulty-badge beginner">নতুন</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3><span class="icon">💡</span> আজকের চ্যালেঞ্জ</h3>
+                        <div class="challenge-card">
+                            <h4>Binary Search - Lower Bound</h4>
+                            <p>আপনার দুর্বল এলাকা: Binary Search</p>
+                            <p><strong>সমস্যা:</strong> একটি sorted array তে একটি element এর lower bound খুঁজে বের করুন।</p>
+                            <a href="#" class="problem-link">সমস্যা সমাধান করুন</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="contests" class="tab-content">
+                <h2>📅 আগামী ৭ দিনের প্রতিযোগিতা</h2>
+                <div class="dashboard">
+                    <div class="card">
+                        <h3><span class="icon">🟢</span> Codeforces</h3>
+                        <div class="contest-item">
+                            <h4>Educational Codeforces Round 159</h4>
+                            <div class="contest-meta">
+                                <span>১৪ জুন, ২০২৫ - 8:35 PM</span>
+                                <span class="difficulty-badge intermediate">মধ্যম</span>
+                            </div>
+                        </div>
+                        <div class="contest-item">
+                            <h4>Codeforces Round #913 (Div. 2)</h4>
+                            <div class="contest-meta">
+                                <span>১৬ জুন, ২০২৫ - 8:35 PM</span>
+                                <span class="difficulty-badge intermediate">মধ্যম</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3><span class="icon">🟡</span> LeetCode</h3>
+                        <div class="contest-item">
+                            <h4>Weekly Contest 372</h4>
+                            <div class="contest-meta">
+                                <span>১৫ জুন, ২০২৫ - 10:30 AM</span>
+                                <span class="difficulty-badge beginner">নতুন</span>
+                            </div>
+                        </div>
+                        <div class="contest-item">
+                            <h4>Biweekly Contest 115</h4>
+                            <div class="contest-meta">
+                                <span>১৮ জুন, ২০২৫ - 10:30 AM</span>
+                                <span class="difficulty-badge intermediate">মধ্যম</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3><span class="icon">🔵</span> AtCoder</h3>
+                        <div class="contest-item">
+                            <h4>AtCoder Beginner Contest 315</h4>
+                            <div class="contest-meta">
+                                <span>১৭ জুন, ২০২৫ - 8:00 PM</span>
+                                <span class="difficulty-badge beginner">নতুন</span>
+                            </div>
+                        </div>
+                        <div class="contest-item">
+                            <h4>AtCoder Regular Contest 165</h4>
+                            <div class="contest-meta">
+                                <span>১৯ জুন, ২০২৫ - 8:00 PM</span>
+                                <span class="difficulty-badge advanced">উন্নত</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3><span class="icon">🟤</span> CodeChef</h3>
+                        <div class="contest-item">
+                            <h4>June Long Challenge 2025</h4>
+                            <div class="contest-meta">
+                                <span>১৫ জুন, ২০২৫ - 3:00 PM</span>
+                                <span class="difficulty-badge intermediate">মধ্যম</span>
+                            </div>
+                        </div>
+                        <div class="contest-item">
+                            <h4>Cook-Off June 2025</h4>
+                            <div class="contest-meta">
+                                <span>২০ জুন, ২০২৫ - 9:30 PM</span>
+                                <span class="difficulty-badge intermediate">মধ্যম</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn" onclick="enableNotifications()">🔔 নোটিফিকেশন চালু করুন</button>
+            </div>
+
+            <div id="progress" class="tab-content">
+                <h2>📈 আপনার অগ্রগতি ট্র্যাকার</h2>
+                <div class="dashboard">
+                    <div class="card">
+                        <h3><span class="icon">🏆</span> রেটিং ট্রেন্ড</h3>
+                        <div class="chart-container">
+                            📊 রেটিং চার্ট (বাস্তবায়নের জন্য Chart.js প্রয়োজন)
+                        </div>
+                        <div>
+                            <strong>গত মাসের উন্নতি:</strong>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 75%"></div>
+                            </div>
+                            <span>+127 রেটিং পয়েন্ট</span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3><span class="icon">💪</span> শক্তিশালী এলাকা</h3>
+                        <div class="daily-task">✅ Array & String Manipulation - 92% সঠিকতা</div>
+                        <div class="daily-task">✅ Greedy Algorithms - 88% সঠিকতা</div>
+                        <div class="daily-task">✅ Math & Number Theory - 85% সঠিকতা</div>
+                    </div>
+
+                    <div class="card">
+                        <h3><span class="icon">⚠️</span> দুর্বল এলাকা</h3>
+                        <div class="daily-task">❌ Dynamic Programming - 45% সঠিকতা</div>
+                        <div class="daily-task">❌ Graph Algorithms - 52% সঠিকতা</div>
+                        <div class="daily-task">❌ Binary Search - 48% সঠিকতা</div>
+                    </div>
+
+                    <div class="card">
+                        <h3><span class="icon">📊</span> সমাধান পরিসংখ্যান</h3>
+                        <div class="rating-item">
+                            <span>মোট সমাধান</span>
+                            <span class="rating-value">847</span>
+                        </div>
+                        <div class="rating-item">
+                            <span>এই মাসে</span>
+                            <span class="rating-value">134</span>
+                        </div>
+                        <div class="rating-item">
+                            <span>গড় দৈনিক</span>
+                            <span class="rating-value">4.3</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="study" class="tab-content">
+                <h2>📚 ৪ সপ্তাহের অধ্যয়ন পরিকল্পনা</h2>
+                <div class="card study-plan">
+                    <h3><span class="icon">📅</span> আপনার স্তর: মধ্যম (Intermediate)</h3>
+                    
+                    <div class="week-item">
+                        <h4>🗓️ সপ্তাহ ১: Dynamic Programming এর ভিত্তি</h4>
+                        <div class="daily-task">
+                            <strong>দিন ১-২:</strong> মেমোইজেশন এবং Tabulation শিখুন। Fibonacci, Climbing Stairs জাতীয় সহজ সমস্যা সমাধান করুন।
+                        </div>
+                        <div class="daily-task">
+                            <strong>দিন ৩-৪:</strong> 0/1 Knapsack Problem বুঝুন। কমপক্ষে ৫টি knapsack ভেরিয়েশন সমাধান করুন।
+                        </div>
+                        <div class="daily-task">
+                            <strong>দিন ৫-৭:</strong> Longest Common Subsequence (LCS) এবং এর ভেরিয়েশন নিয়ে কাজ করুন।
+                        </div>
+                    </div>
+
+                    <div class="week-item">
+                        <h4>🗓️ সপ্তাহ ২: Graph Algorithms</h4>
+                        <div class="daily-task">
+                            <strong>দিন ১-২:</strong> DFS এবং BFS এর implementation এবং application শিখুন।
+                        </div>
+                        <div class="daily-task">
+                            <strong>দিন ৩-৪:</strong> Shortest Path (Dijkstra, Bellman-Ford) algorithms নিয়ে কাজ করুন।
+                        </div>
+                        <div class="daily-task">
+                            <strong>দিন ৫-৭:</strong> Minimum Spanning Tree (Kruskal, Prim) এবং Topological Sort শিখুন।
+                        </div>
+                    </div>
+
+                    <div class="week-item">
+                        <h4>🗓️ সপ্তাহ ৩: Advanced Data Structures</h4>
+                        <div class="daily-task">
+                            <strong>দিন ১-২:</strong> Segment Tree এর ভিত্তি এবং Range Query সমস্যা সমাধান।
+                        </div>
+                        <div class="daily-task">
+                            <strong>দিন ৩-৪:</strong> Binary Indexed Tree (Fenwick Tree) শিখুন।
+                        </div>
+                        <div class="daily-task">
+                            <strong>দিন ৫-৭:</strong> Disjoint Set Union (DSU) এবং এর applications।
+                        </div>
+                    </div>
+
+                    <div class="week-item">
+                        <h4>🗓️ সপ্তাহ ৪: Mixed Practice এবং Contest Preparation</h4>
+                        <div class="daily-task">
+                            <strong>দিন ১-৩:</strong> গত ৩ সপ্তাহের টপিক মিক্স করে কঠিন সমস্যা সমাধান করুন।
+                        </div>
+                        <div class="daily-task">
+                            <strong>দিন ৪-৫:</strong> Virtual Contest খেলুন। সময়ের মধ্যে সমাধানের অভ্যাস করুন।
+                        </div>
+                        <div class="daily-task">
+                            <strong>দিন ৬-৭:</strong> Weak areas নিয়ে আরও কাজ করুন এবং পরবর্তী মাসের পরিকল্পনা করুন।
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="challenges" class="tab-content">
+                <h2>💪 দৈনিক চ্যালেঞ্জ এবং কুইজ</h2>
+                <div class="dashboard">
+                    <div class="card">
+                        <h3><span class="icon">🎯</span> আজকের চ্যালেঞ্জ</h3>
+                        <div class="challenge-card">
+                            <h4>Problem: Binary Search - Find Peak Element</h4>
+                            <p><strong>বিষয়:</strong> Binary Search (আপনার দুর্বল এলাকা)</p>
+                            <p><strong>কঠিনতা:</strong> মধ্যম</p>
+                            <p><strong>বর্ণনা:</strong> একটি array তে peak element খুঁজে বের করুন যেখানে peak element তার পাশের elements থেকে বড় বা সমান।</p>
+                            <p><strong>Input:</strong> [1, 2, 3, 1]</p>
+                            <p><strong>Output:</strong> 2 (index) কারণ nums[2] = 3 হল peak</p>
+                            <a href="#" class="problem-link">LeetCode এ সমাধান করুন</a>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3><span class="icon">🧠</span> গতকালের কুইজ - Graph Theory</h3>
+                        <div id="quiz">
+                            <div class="quiz-question">
+                                <h4>প্রশ্ন ১: DFS এর Time Complexity কত?</h4>
+                                <div class="quiz-options">
+                                    <div class="quiz-option" onclick="selectOption(this)">O(V + E)</div>
+                                    <div class="quiz-option" onclick="selectOption(this)">O(V²)</div>
+                                    <div class="quiz-option" onclick="selectOption(this)">O(E log V)</div>
+                                    <div class="quiz-option" onclick="selectOption(this)">O(V log V)</div>
+                                </div>
+                            </div>
+
+                            <div class="quiz-question">
+                                <h4>প্রশ্ন ২: কোন algorithm shortest path বের করার জন্য ব্যবহৃত হয়?</h4>
+                                <div class="quiz-options">
+                                    <div class="quiz-option" onclick="selectOption(this)">DFS</div>
+                                    <div class="quiz-option
